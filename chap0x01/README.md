@@ -11,7 +11,7 @@
     首先我们进入到虚拟机中，输入账号密码完成登录
     然后我们输入命令`lsb_release -a`
     回车后如下图：
-    ![release](/img/release_info.jpg)
+    ![release](./img/release_info.jpg)
     从图中我们可以知道当前的发行版本为 Ubuntu 20.04
 
 &nbsp;
