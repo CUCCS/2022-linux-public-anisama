@@ -12,6 +12,8 @@
     然后我们输入命令`lsb_release -a`
     回车后如下图：
     ![release](./img/release_info.jpg)
+
+
     从图中我们可以知道当前的发行版本为 Ubuntu 20.04
 
 &nbsp;
@@ -19,7 +21,7 @@
 * **当前Linux内核版本信息**
     同样，输入命令`uname -a`
     回车后可以得到：
-    ![kernel](/img/kernel_info.jpg)
+    ![kernel](./img/kernel_info.jpg)
     说明如下：
             
             第一个组数字：5，主版本号
@@ -36,31 +38,31 @@
 
 我们先手动添加一下网卡，在「选中虚拟机后->设置->网络->网卡3」中启用网络连接，具体如下图：
 
-![web_set](/img/web_set.jpg)
+![web_set](./img/web_set.jpg)
 
 然后我们启动虚拟机，输入命令`ifconfig -a`查看虚拟机中的所有网卡
 
-![web_all](/img/web_all.jpg)
+![web_all](./img/web_all.jpg)
 
 再通过命令`ifconfig`查询在工作中的网卡
 
-![web_work](/img/web_work.jpg)
+![web_work](./img/web_work.jpg)
 
 通过对比，我们发现手动添加的网卡没有开始工作
 
 输入命令`sudo vim /etc/netplan/00-installer-config.yaml`后可以看到当前的网络配置如下：
 
-![net_first](/img/net_before.jpg)
+![net_first](./img/net_before.jpg)
 
 通过`i`切换输入模式进行文本编辑添加之前的新网卡，如下图：
 
-![net_after](/img/net_after.jpg)
+![net_after](./img/net_after.jpg)
 
 输入`:wq`保存编辑后的网络配置，并输入命令`sudo netplan apply`使其生效
 
 重新启动虚拟机，输入命令`ifconfig`查询工作中的网卡，可以看到新加的网卡可以自动启动和自动获取ip地址
 
-![web_work1](/img/web_work1.jpg)
+![web_work1](./img/web_work1.jpg)
 
 &nbsp;
 
@@ -70,34 +72,34 @@
   
 在选中「虚拟机->网络->网卡1->高级->端口转发」中手动添加设置如下：
 
-![port_set](/img/port_set.jpg)
+![port_set](./img/port_set.jpg)
 
 在终端输入命令`scp -P 2222 ~/Desktop/hw.txt cuc@127.0.0.1:~/`可以实现
 
-![local_vb](/img/local_vb.jpg)
+![local_vb](./img/local_vb.jpg)
 
 * 虚拟机发送文件给宿主机有两种方式：
 
 （1）在终端中输入命令`scp -P 2222 cuc@127.0.0.1:~/hw.txt ~/Desktop`
 
-![down_vb](/img/down_vb1.jpg)
+![down_vb](./img/down_vb1.jpg)
 
 (2)在虚拟机中输入命令`scp -P 22 ~/hw.txt gychg@192.168.1.6:~/Desktop`
 
-![down_vb2](/img/down_vb2.jpg)
+![down_vb2](./img/down_vb2.jpg)
 
 * 本机向远程Linux系统传文件：
 
 在本机终端中输入命令`scp ~/Desktop/hw.txt root@47.103.52.144:~/`
 
-![re_lo](/img/remote_local.jpg)
+![re_lo](./img/remote_local.jpg)
 
 
 * 远程Linux系统向本机传文件：
 
 在本机终端中输入命令`scp root@47.103.52.144:~/hw.txt ~/Desktop`
 
-![down_remote](/img/down_remote.jpg)
+![down_remote](./img/down_remote.jpg)
 
 &nbsp;
 
@@ -105,30 +107,30 @@
 
 首先对端口进行设置端口映射，在选中「虚拟机->网络->网卡1->高级->端口转发」中手动添加，虚拟机端口为ssh默认22
 
-![new_port](/img/new_port.jpg)
+![new_port](./img/new_port.jpg)
 
 在终端中输入命令`ssh -p 2222 cuc@127.0.0.1`连接到虚拟机(此处的ip为本机ip),结果如图：
 
-![connect_1](/img/connect_first.jpg)
+![connect_1](./img/connect_first.jpg)
 
 可见此时需要输入密码才能连接，先输入`exit`退出连接
 接下来，现在我们生成公钥，在终端中输入命令`ssh-keygen -t rsa`（因为之前生成过，所以这里提示的是已经存在，并问是否覆盖）
 
-![key](/img/key.jpg)
+![key](./img/key.jpg)
 
 在终端输入命令`ssh-copy-id -p 2222 cuc@127.0.0.1`将生成的公钥传到虚拟机中
 
-![send_key](/img/send_key.jpg)
+![send_key](./img/send_key.jpg)
 
 打开虚拟机，登录后输入命令`sudo vim /etc/ssh/sshd_config`对参数进行修改，找到`PubKeyAuthentication`将其前面的`#`删除，保存修改
 
-![delete](/img/delete_.jpg)
+![delete](./img/delete_.jpg)
 
 输入命令`sudo /etc/init.d/ssh restart`重启一下ssh
 
 现在回到终端，输入命令`ssh -p 2222 cuc@127.0.0.1`就可以免密登录了
 
-![connect_2](/img/connect_then.jpg)
+![connect_2](./img/connect_then.jpg)
 
 &nbsp;
 
